@@ -1,0 +1,129 @@
+Polynomial Regression
+2.3.1 Polynomial Regression Intuition
+Is Polynomial Regression a linear or non linear model?
+That depends on what you are referring to. Polynomial Regression is linear on the coefficients since we don’t
+have any power of the coefficients (all the coefficients are raised to the power of 1: b0, b1, ..., bn). However,
+Polynomial Regression is a non linear function of the input x, since we have the inputs raised to several
+powers: x (power 1), x
+2
+(power 2), ..., x
+n (power n). That is how we can also see the Polynomial Regression
+as a non linear model. Besides indeed, Polynomial Regression is appropriate when the data is non linearly
+distributed (meaning you can’t fit a straight line between y and x).
+Page 8 of 51
+Machine Learning A-Z Q&A
+2.3.2 Polynomial Regression in Python
+Why didn’t we apply Feature Scaling in our Polynomial Regression model?
+It’s simply because, since y is a linear combination of x and x
+2
+, the coefficients can adapt their scale to put
+everything on the same scale. For example if y takes values between 0 and 1, x takes values between 1 and
+10 and x
+2
+takes values between 1 and 100, then b1 can be multiplied by 0.1 and b2 can be multiplied by 0.01
+so that y, b1x1 and b2x2 are all on the same scale.
+How do we find the best degree?
+The main form of finding a good fit is to plot the model and see what it looks like visually. You simply
+test several degrees and you see which one gives you the best fit. The other option is to find the lowest
+root-mean-square error (RMSE) for your model, but in that case be careful not to overfit the data.
+Why did we have to create a second linear regressor ’lin_reg_2’ ? Could we not have used
+’lin_reg’ directly?
+No, because ’lin_reg’ is already fitted to X and y and now we want to fit a new linear model to Xpoly and
+y. So we have to create a new regressor object. One must important that the fit method here finds the
+coefficient between the independent variables and the dependent variable. Therefore since ’lin_reg’ already
+got the coefficients of correlation between X and y, ’lin_reg_2’ has to be created to get some new coefficients
+of correlations between Xpoly and y.
+2.3.3 Polynomial Regression in R
+In R, I have to create manually the different columns for each polynomial feature? What if
+there are many polynomial features?
+You will very rarely have to create more than 4 polynomial features, otherwise you would get overfitting,
+which must absolutely be avoided in Machine Learning. So even if you have to create them manually, it will
+never take too much of your time. Besides you can use the template.
+How do we find the best degree? (Asking this question again in case some students only do R
+The main form of finding a good fit is to plot the model and see what it looks like visually. You simply
+test several degrees and you see which one gives you the best fit. The other option is to find the lowest
+root-mean-square error (RMSE) for your model, but in that case be careful not to overfit the data.
+2.4 SVR
+2.4.1 SVR Intuition
+When should I use SVR?
+You should use SVR if a linear model like linear regression doesn’t fit very well your data. This would mean
+you are dealing with a non linear problem, where your data is not linearly distributed. Therefore in that
+case SVR could be a much better solution.
+I didn’t understand the Intuition Lecture. Am I in trouble?
+Not at all. SVR is a pretty abstract model and besides it is not that commonly used. What you must rather
+understand is the SVM model, which you will see in Part 3 - Classification. Then once you understand the
+SVM model, you will get a better grasp of the SVR model, since the SVR is simply the SVM for Regression.
+However we wanted to include SVR in this course to give you an extra option in your Machine Learning
+toolkit.
+Page 9 of 51
+Machine Learning A-Z Q&A
+2.4.2 SVR in Python
+Why do we need to ’sc_Y.inverse_transform’ ?
+We need the inverse_transform method to go back to the original scale. Indeed we applied feature scaling
+so we get this scale around 0 and if we make a prediction without inversing the scale we will get the
+scaled predicted salary. And of course we want the real salary, not the scaled one, so we have to use
+’sc_Y.inverse_transform’. Also what is important to understand is that ’transform’ and ’inverse_transform’
+are paired methods.
+2.4.3 SVR in R
+Why did we not apply feature scaling like we did explicitly in Python
+That’s because in svm() function of R, the values are automatically scaled.
+Can we select the most significant variables thanks to the p-value like we did in R before?
+You couldn’t use p-value because SVR is not a linear model, and p-values apply only to linear models.
+Therefore feature selection is out of the question. But you could do feature extraction, which you will see in
+Part 9 - Dimensionality Reduction. That you can apply to Decision Trees, and it will reduce the number of
+your features.
+2.5 Decision Tree Regression
+2.5.1 Decision Tree Regression Intuition
+How does the algorithm split the data points?
+It uses reduction of standard deviation of the predictions. In other words, the standard deviation is decreased
+right after a split. Hence, building a decision tree is all about finding the attribute that returns the highest
+standard deviation reduction (i.e., the most homogeneous branches).
+What is the Information Gain and how does it work in Decision Trees?
+The Information Gain in Decision Tree Regression is exactly the Standard Deviation Reduction we are
+looking to reach. We calculate by how much the Standard Deviation decreases after each split. Because the
+more the Standard Deviation is decreased after a split, the more homogeneous the child nodes will be.
+What is the Entropy and how does it work in Decision Trees?
+The Entropy measures the disorder in a set, here in a part resulting from a split. So the more homogeneous
+is your data in a part, the lower will be the entropy. The more you have splits, the more you have chance
+to find parts in which your data is homogeneous, and therefore the lower will be the entropy (close to 0) in
+these parts. However you might still find some nodes where the data is not homogeneous, and therefore the
+entropy would not be that small.
+2.5.2 Decision Tree Regression in Python
+Does a Decision Tree make much sense in 1D?
+Not really, as we saw in the practical part of this section. In 1D (meaning one independent variable), the
+Decision Tree clearly tends to overfit the data. The Decision Tree would be much more relevant in higher
+dimension, but keep in mind that the implementation we made here in 1D would be exactly the same in
+higher dimension. Therefore you might want to keep that model in your toolkit in case you are dealing
+with a higher dimensional space. This will actually be the case in Part 3 - Classification, where we will use
+Decision Tree for Classification in 2D, which you will see turns out to be more relevant.
+Page 10 of 51
+Machine Learning A-Z Q&A
+2.5.3 Decision Tree Regression in R
+Why do we get different results between Python and R?
+The difference is likely due to the random split of data. If we did a cross-validation (see Part 10) on all the
+models in both languages, then you would likely get a similar mean accuracy. That being said, we would
+recommend more using Python for Decision Trees since the model is slightly better implemented in Python.
+Is the Decision Tree appropriate here?
+Here in this example, we can clearly see that the fitting curve is a stair with large gaps in the discontinuities.
+That decision tree regression model is therefore not the most appropriate, and that is because we have only
+one independent variables taking discrete values. So what happened is that the prediction was made in the
+lower part of the gap in Python, and made in the upper part of the gap in R. And since the gap is large, that
+makes a big difference. If we had much more observations, taking values with more continuity (like with a
+0.1 step), the gaps would be smaller and therefore the predictions in Python and R far from each other.
+Can we select the most significant variables thanks to the p-value like we did in R before?
+You couldn’t use p-value because Decision Tree is not a linear model, and p-values apply only to linear
+models. Therefore feature selection is out of the question. But you could do feature extraction, which you
+will see in Part 9 - Dimensionality Reduction. That you can apply to Decision Trees, and it will reduce the
+number of your features.
+2.6 Random Forest Regression
+2.6.1 Random Forest Regression Intuition
+What is the advantage and drawback of Random Forests compared to Decision Trees? Advantage: Random Forests can give you a better predictive power than Decision Trees.
+Drawback: Decision Tree will give you more interpretability than Random Forests, because you can plot the
+graph of a Decision Tree to see the different splits leading to the prediction, as seen in the Intuition Lecture.
+That’s something you can’t do with Random Forests.
+When to use Random Forest and when to use the other models?
+The best answer to that question is: try them all!
+Indeed, thanks to the templates it will only take you 10 minutes to try all the models, which is very little
+compared to the time dedicated to the other parts of a data science project (like Data Preprocessing for
+example). So just don’t be scared to try all the regression models and compare the results (through cross
+validation which we will see in Part 

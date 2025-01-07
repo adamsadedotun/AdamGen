@@ -1,0 +1,9 @@
+README.md
+setup.py
+AdamGen.egg-info/PKG-INFO
+AdamGen.egg-info/SOURCES.txt
+AdamGen.egg-info/dependency_links.txt
+AdamGen.egg-info/requires.txt
+AdamGen.egg-info/top_level.txt
+src/__init__.py
+src/AdamGenerator/__init__.py
