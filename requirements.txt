@@ -3,8 +3,11 @@ langchain
 streamlit
 python-dotenv
 pyPDF2
-pandas
-env ipykernel
+pandas as pd
+
+
 
 
 -e .
+
+
